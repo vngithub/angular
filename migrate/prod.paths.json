@@ -1,0 +1,16 @@
+{
+  "paths": {
+      "@domain/*": [
+        "../../../angular_4/config/src/app/try-comp/*"
+      ],
+      "@migrate/*": [
+        "../*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@testangular/*": [
+        "../../../angular_4/testangular/*"
+      ]
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "version": 3,
+  "file": "migrate.js",
+  "sources": [
+    "ng://migrate/out/src/app/modules/header/header.module.ts",
+    "ng://migrate/out/src/app/modules/header/header.component.ts"
+  ],
+  "sourcesContent": [
+    "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { HeaderComponent } from './header.component';\nimport { UpgradeModule, downgradeComponent, downgradeModule} from '@angular/upgrade/static';\n\nimport { BrowserModule } from '@angular/platform-browser';\nimport { platformBrowserDynamic } from '@angular/platform-browser-dynamic';\n\n\n@NgModule({\n  imports: [\n    BrowserModule,\n    CommonModule,\n    UpgradeModule\n  ],\n  declarations: [HeaderComponent],\n  entryComponents: [\n    HeaderComponent // Don't forget this!!!\n  ]\n})\nexport class HeaderModule { \n\tngDoBootstrap() {\n  }\n}\n\n\nplatformBrowserDynamic().bootstrapModule(HeaderModule)\n  .catch(err => console.log(err));\n\n\ndeclare var angular: any;\n\nangular.module('App')\n  .directive(\n    'appHeader',\n    downgradeComponent({component: HeaderComponent})\n  );\n\n\n\n\n",
+    "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-header',\n  template: `<h1>\n  <ng-content></ng-content>\n</h1>`,\n  styles: [`h1{color:red}`]\n})\nexport class HeaderComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit() {\n  }\n\n}\n"
+  ],
+  "names": [],
+  "mappings": ";;;;;;;;;;ACAA,AASA,MAAA,eAAA,CAAA;IAEE,WAAF,GAAA,GAAmB;;;;IAEjB,QAAQ,GAAV;KACG;;;IAZH,EAAA,IAAA,EAAC,SAAS,EAAV,IAAA,EAAA,CAAW;gBACT,QAAQ,EAAE,YAAY;gBACtB,QAAQ,EAAE,CAAZ;;KAEA,CAAM;gBACJ,MAAM,EAAE,CAAC,CAAX,aAAA,CAA0B,CAAC;aAC1B,EAAD,EAAA;;;;;;;;;ADRA,AAoBA,MAAA,YAAA,CAAA;;;;IACC,aAAa,GAAd;KACG;;;IAbH,EAAA,IAAA,EAAC,QAAQ,EAAT,IAAA,EAAA,CAAU;gBACR,OAAO,EAAE;oBACP,aAAa;oBACb,YAAY;oBACZ,aAAa;iBACd;gBACD,YAAY,EAAE,CAAC,eAAe,CAAC;gBAC/B,eAAe,EAAE;oBACf,eAAe;iBAChB;aACF,EAAD,EAAA;;;;AAOA,sBAAsB,EAAE,CAAC,eAAe,CAAC,YAAY,CAAC;KACnD,KAAK,CAAC,GAAG,IAAI,OAAO,CAAC,GAAG,CAAC,GAAG,CAAC,CAAC,CAAC;AAKlC,OAAO,CAAC,MAAM,CAAC,KAAK,CAAC;KAClB,SAAS,CACR,WAAW,EACX,kBAAkB,CAAC,EAAC,SAAS,EAAE,eAAe,EAAC,CAAC,CACjD,CAAC;;;;;;;;;;;;;;;;;"
+}

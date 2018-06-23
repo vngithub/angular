@@ -1,0 +1,22 @@
+{
+  "version": 3,
+  "file": "migrate.umd.js",
+  "sources": [
+    "ng://migrate/out/src/app/modules/header/header.module.ts",
+    "ng://migrate/out/src/app/modules/header/header.component.ts"
+  ],
+  "sourcesContent": [
+    "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { HeaderComponent } from './header.component';\nimport { UpgradeModule, downgradeComponent, downgradeModule} from '@angular/upgrade/static';\n\nimport { BrowserModule } from '@angular/platform-browser';\nimport { platformBrowserDynamic } from '@angular/platform-browser-dynamic';\n\n\n@NgModule({\n  imports: [\n    BrowserModule,\n    CommonModule,\n    UpgradeModule\n  ],\n  declarations: [HeaderComponent],\n  entryComponents: [\n    HeaderComponent // Don't forget this!!!\n  ]\n})\nexport class HeaderModule { \n\tngDoBootstrap() {\n  }\n}\n\n\nplatformBrowserDynamic().bootstrapModule(HeaderModule)\n  .catch(err => console.log(err));\n\n\ndeclare var angular: any;\n\nangular.module('App')\n  .directive(\n    'appHeader',\n    downgradeComponent({component: HeaderComponent})\n  );\n\n\n\n\n",
+    "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-header',\n  template: `<h1>\n  <ng-content></ng-content>\n</h1>`,\n  styles: [`h1{color:red}`]\n})\nexport class HeaderComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit() {\n  }\n\n}\n"
+  ],
+  "names": [
+    "downgradeComponent",
+    "platformBrowserDynamic",
+    "UpgradeModule",
+    "CommonModule",
+    "BrowserModule",
+    "NgModule",
+    "Component"
+  ],
+  "mappings": ";;;;;;ACAA,IAAA,eAAA,IAAA,YAAA;IAWE,SAAF,eAAA,GAAA;KAAmB;IAEjB,eAAF,CAAA,SAAA,CAAA,QAAU,GAAR,YAAF;KACG,CAAH;;;;IAZA,EAAA,IAAA,EAACM,cAAS,EAAV,IAAA,EAAA,CAAW;gBACT,QAAQ,EAAE,YAAY;gBACtB,QAAQ,EAAE,0CAEN;gBACJ,MAAM,EAAE,CAAC,eAAe,CAAC;aAC1B,EAAD,EAAA;;;ADRA,IAAA,YAAA,IAAA,YAAA;IAAA,SAAA,YAAA,GAAA;;IAqBC,YAAD,CAAA,SAAA,CAAA,aAAc,GAAb,YAAD;KACG,CAAH;;;;IAbA,EAAA,IAAA,EAACD,aAAQ,EAAT,IAAA,EAAA,CAAU;gBACR,OAAO,EAAE;oBACPD,6BAAa;oBACbD,mBAAY;oBACZD,qBAAa;iBACd;gBACD,YAAY,EAAE,CAAC,eAAe,CAAC;gBAC/B,eAAe,EAAE;oBACf,eAAe;iBAChB;aACF,EAAD,EAAA;;;AAOAD,6CAAsB,EAAE,CAAC,eAAe,CAAC,YAAY,CAAC;KACnD,KAAK,CAAC,UAAA,GAAG,EAAZ,EAAgB,OAAA,OAAO,CAAC,GAAG,CAAC,GAAG,CAAC,CAAhC,EAAgC,CAAC,CAAC;AAKlC,OAAO,CAAC,MAAM,CAAC,KAAK,CAAC;KAClB,SAAS,CACR,WAAW,EACXD,0BAAkB,CAAC,EAAC,SAAS,EAAE,eAAe,EAAC,CAAC,CACjD,CAAC;;;;;;;;;;;;;"
+}
