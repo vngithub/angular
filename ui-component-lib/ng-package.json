@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "name": "@ui/comp",
+  "version": "1.0.0",
+  "lib": {
+    "entryFile": "public_api.ts"
+  }
+}
