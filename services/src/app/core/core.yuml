@@ -1,0 +1,3 @@
+// {type:class}
+// {direction:topDown}
+[MessageCenter|getInstance(): MessageCenter|addMessage(Message)|getMessagesOfType(MESSAGE_TYPE): Observable<Message>|getMessages():Observable<Message>]<>1-Message 0..*>[Message]

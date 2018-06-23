@@ -1,0 +1,1 @@
+export {SanitizerPipe} from './SanitizerPipe';
