@@ -1,0 +1,317 @@
+<div ng-show="showSideBar">
+    <!--<div class="mobile_menu_toggle">
+        <a href="javascript:;" data-ng-click="enableMobileMenu=!enableMobileMenu;" data-ng-class="{icon_arrow_up: enableMobileMenu, icon_arrow_down: !enableMobileMenu}">Menu</a>
+    </div>-->
+
+    <!---======================== MONITORING========================-->
+    <ul class="FirstMe" data-ng-class="{expandMobileMenu: enableMobileMenu}"  ng-show = "(!activeAppWidget || activeAppWidget == 'app-nw-mgmt')">
+        <li data-ng-show="!isMSPApp() && collectAppPermission('/DASHBOARD') !=='denied'" ng-class="{selectedModule :isMonitoring() }"  onclick="javascript:trackClickLink('#monitoringMainMenu','Side_Menu_Monitoring_Overview_Selected');" ng-cloak><a class="monitoring" id='monitoringMainMenu' href="#/DASHBOARD" ng-class="{selected :isMonitoring() }"><label HelpId="0:monitoring" ng-bind="labels.monitoring"></label></a>
+            <ul class="subnav">
+                <li onclick="javascript:trackClickLink('#overviewSubMenu','Side_Menu_Monitoring_Overview_Selected');" ng-class="{hideLeftNav:(groupConfig.currentSelection.indexOf('device') != -1)}"><a href="#/DASHBOARD" ng-class="{selected: (selectedNav === '/DASHBOARD')}" pageId="DASHBOARD" id="overviewSubMenu" class=""><label HelpId="0:overview" ng-bind="labels.overview"></label></a></li>
+                <li class=""><a href="#/BRANCHEALTH" ng-class="{selected: (selectedNav === '/BRANCHEALTH')}" class="" pageId="BRANCHEALTH" id="branchHealthSubmenu"><label ng-bind="labels.branchHealth"></label></a></li>
+                <li class="" onclick="javascript:trackClickLink('#accessPointSubMenu','Side_Menu_Monitoring_AccessPoints_Selected');" ng-class="{hideLeftNav:((uiLicenses.devices.iap==false || groupConfig.currentSelection.indexOf('device') != -1 || groupConfig.currentSelection.indexOf('controller') != -1) || (groupConfig.currentGroup.swarm_count===0 && groupConfig.currentGroup.device_count>0))}"><a href="#/OVERVIEW" ng-class="{selected: (selectedNav === '/OVERVIEW') || (selectedNav === '/APDETAIL')}" pageId="OVERVIEW" id='accessPointSubMenu'><label HelpId="0:access_points"  ng-bind="labels.access_points"></label></a></li>
+                <li class="" ng-class="{hideLeftNav:(uiLicenses.devices.switches==false || groupConfig.currentSelection.indexOf('swarm') != -1 || groupConfig.currentSelection.indexOf('controller') != -1)}"><a href="#/SWITCHES" ng-class="{selected: (selectedNav === '/SWITCHES') || (selectedNav === '/SWITCHDETAILS')}" pageId="SWITCHES" id="SwitchesSubMenu"><label HelpId="0:switches" ng-bind="labels.switches"></label></a></li>
+                <li class="" ng-class="{hideLeftNav:(controllerEnabled==false || groupConfig.currentSelection.indexOf('swarm') != -1 || groupConfig.currentSelection.indexOf('device') != -1)}"><a href="#/MOBILITYCONTROLLER" ng-class="{selected: (selectedNav === '/MOBILITYCONTROLLER') || (selectedNav === '/MOBILITYCONTROLLERDETAIL')}" pageId="MOBILITYCONTROLLER" id="ControllerSubMenu"><label HelpId="0:controller">Gateways</label></a></li>
+
+                <li class="" onclick="javascript:trackClickLink('#clientSubMenu','Side_Menu_Monitoring_Clients_Selected');"><a href="#/CLIENT" pageId="CLIENT" id='clientSubMenu' ng-class="{selected: (selectedNav === '/CLIENT') || (selectedNav === '/CLIENTDETAIL')}"><label HelpId="0:clients" ng-show="collectAppPermission('/APPRF') !=='denied'"ng-bind="labels.clients_left_pane"></label></a></li>
+                
+                <li class="" onclick="javascript:trackClickLink('#appRFSubMenu','Side_Menu_Monitoring_AppRF_Selected');" ng-show="collectAppPermission('/APPRF') !=='denied'" ng-class="{hideLeftNav:((uiLicenses.devices.iap==false || groupConfig.currentSelection.indexOf('device') != -1 || groupConfig.currentSelection.indexOf('controller') != -1) || (groupConfig.currentGroup.swarm_count===0 && groupConfig.currentGroup.device_count>0))}"><a href="#/APPRF" ng-class="{selected: (selectedNav === '/APPRF')}" class="" pageId="APPRF" id="appRFSubMenu"><label >AppRF™</label></a></li>
+
+                <li class="" ng-class="{hideLeftNav:(uiLicenses.devices.iap==false || uiLicenses.devices.iapWired || groupConfig.currentSelection.indexOf('device') != -1 || groupConfig.currentSelection.indexOf('controller') != -1)}"><a href="#/WIDS" ng-class="{selected: (selectedNav === '/WIDS')}" pageId="WIDS" id="widsSubMenu"><label HelpId="0:wids" ng-bind="labels.wids"></label></a></li>
+                <!-- <li class=""><a href="#/EVENTLOG" ng-class="{selected: (selectedNav === '/EVENTLOG')}" pageId="EVENTLOG" id='eventLogSubMenu'><label HelpId="0:event_log"  ng-bind="labels.event_log"></label></a></li> -->
+                <li class=""><a href="#/NOTIFICATIONS" ng-class="{selected: (selectedNav === '/NOTIFICATIONS')}" class="" pageId="NOTIFICATIONS" id="notificationsubmenu"><label ng-bind="labels.notifications"></label></a></li>
+            </ul>
+        </li>
+
+        <li data-ng-show="isMSPApp()" ng-class="{selectedModule : (selectedNav === '/MSPDASHBOARD') || (selectedNav === '/ALLCUSTOMERS') || (selectedNav === '/NOTIFICATIONS') }" ng-cloak><a class="monitoring" id='msp_monitoringMainMenu' href="#/MSPDASHBOARD" ng-class="{selected :isMonitoring() }"><label HelpId="0:monitoring" ng-bind="labels.monitoring"></label></a>
+            <ul class="subnav">
+                <li class="" ng-class="{selected: (selectedNav === '/MSPDASHBOARD')}"><a href="#/MSPDASHBOARD" ng-class="{selected: (selectedNav === '/MSPDASHBOARD')}" pageId="DASHBOARD" id="msp_overviewSubMenu" class=""><label HelpId="0:overview" ng-bind="labels.overview"></label></a></li>
+                <li class=""><a href="#/ALLCUSTOMERS" ng-class="{selected: (selectedNav === '/ALLCUSTOMERS')}" class="" pageId="ALLCUSTOMERS" id="allcustomersSubMenu"><label ng-bind="labels.all_customers"></label></a></li>
+                <li class=""><a href="#/NOTIFICATIONS" ng-class="{selected: (selectedNav === '/NOTIFICATIONS')}" class="" pageId="NOTIFICATIONS" id="notificationsubmenu"><label ng-bind="labels.notifications"></label></a></li>
+            </ul>
+        </li>
+
+        <li ng-hide="(collectAppPermission('/NETWORK') ==='denied' || template_group) || (((uiLicenses.devices.iap==false && uiLicenses.devices.switches==false) || userAccessType === 'guestoperator') || isMSPINCentralView())" prevent-click prevent-click-flag="defaultDevConfig.isPwdChangeRequired" id="configurationMenu" ng-class="{selectedModule :isConfigPage() }" prevent-click-group-id="defaultDevConfig.groupId" prevent-click-group-name="defaultDevConfig.groupName">
+            <a class="configuration ConfigDisabled configuration" href="javascript:trackClickLink('#configurationMenu','Side_Menu_Configuration_Selected');" ng-click="gotoConfig()" state="disable" id='configurationMenu' ng-class="{selected :isConfigPage() }">
+
+                <label HelpId="0:configuration" ng-bind="labels.configuration"></label>
+            </a>
+            <ul class="subnav level-2" ng-hide="defaultDevConfig.isPwdChangeRequired || isAllGroups()">
+
+                <!---======================== WIRELESS CONFIGURATION========================-->
+                <li prevent-click prevent-click-flag="defaultDevConfig.isPwdChangeRequired" id="configurationMainMenuli" ng-class="{selectedModule :isWirelessConfigurationPage() }" prevent-click-group-id="defaultDevConfig.groupId" prevent-click-group-name="defaultDevConfig.groupName" ng-hide="(uiLicenses.devices.iap==false || groupConfig.currentSelection.indexOf('device') != -1 || userAccessType === 'guestoperator' || isSwarmConfigImportPending)"><a class="wireless_configuration ConfigDisabled configuration" href="javascript:;" ng-click="gotoWirelessConfig()" state="disable" id='configurationMainMenu' ng-class="{selected :isWirelessConfigurationPage() }"><label HelpId="0:wireless" ng-bind="labels.wireless"></label></a>
+                    <ul class="subnav" ng-hide="defaultDevConfig.isPwdChangeRequired || isSwitchConfigurationPage() || isHPSwitchConfigurationPage()">
+                        <li class="nonangular-module"><a href="#/NETWORK" ng-class="{selected: (selectedNav === '/NETWORK') || (selectedNav === '/CREATENETWORK') || (selectedNav === '/NETWORKEDIT') || (selectedNav === '/WIREDASSIGNMENT')}" pageId="NETWORK" id='configSubMenu' class=""><label HelpId="0:networks" ng-bind="labels.networks"></label></a></li>
+                        <li class="nonangular-module" ng-hide="isMSPApp()"><a href="#/APS" ng-class="{selected: (selectedNav === '/APS') || (selectedNav === '/APEDIT')}" pageId="APS" id="apsSubMenu"><label HelpId="0:conf_access_points" ng-bind="labels.conf_access_points"></label></a></li>
+                        <li class=""><a href="#/RF" ng-class="{selected: (selectedNav === '/RF')}" pageId="RF" id="rfSubMenu"><label HelpId="0:rf" ng-bind="labels.rf"></label></a></li>
+                        <li class="nonangular-module"><a href="#/WIP" ng-class="{selected: (selectedNav === '/WIP')}" pageId="WIP" id="wipSubMenu"><label HelpId="0:wip" ng-bind="labels.wip"></label></a></li>
+                        <li class="nonangular-module"><a href="#/CONFIGSECURITY" ng-class="{selected: (selectedNav === '/CONFIGSECURITY')}" pageId="CONFIGSECURITY" id="pefSubMenu"><label HelpId="0:pef" ng-bind="labels.pef"></label></a></li>
+                        <li class="nonangular-module"  ng-hide="checkHeron('configuration','VPN','hide')"><a href="#/VPN" pageId="VPN" ng-class="{selected: (selectedNav === '/VPN')}" id="vpnSubMenu"><label HelpId="0:vpn" ng-bind="labels.vpn"></label></a></li>
+                        <li class="nonangular-module"><a href="#/DHCP" ng-class="{selected: (selectedNav === '/DHCP')}" pageId="DHCP" id="dhcpSubMenu"><label>DHCP</label></a></li>
+                        <li class=""><a href="#/SERVICE" ng-class="{selected: (selectedNav === '/SERVICE')}" pageId="SERVICE" id="serviceSubMenu"><label HelpId="0:service" ng-bind="labels.service">Services</label></a></li>
+                        <li class="nonangular-module"><a href="#/SYSTEM" ng-class="{selected: (selectedNav === '/SYSTEM')}" pageId="SYSTEM" id="systemSubMenu"><label HelpId="0:system" >System</label></a></li>
+                    </ul>
+                </li>
+
+                <!---======================== SWITCH CONFIGURATION========================-->
+                <li prevent-click prevent-click-flag="defaultDevConfig.isPwdChangeRequired" ng-class="{selectedModule :isSwitchConfigurationPage() }" prevent-click-group-id="defaultDevConfig.groupId" prevent-click-group-name="defaultDevConfig.groupName" ng-hide="(uiLicenses.devices.switches==false || groupConfig.currentSelection.indexOf('swarm') != -1 || isSwitchConfigImportPending) || userAccessType === 'guestoperator'" id='switchConfigurationMainMenuli'><a class="switch_configuration ConfigDisabled configuration" href="javascript:;" state="disable" id='switchConfigurationMainMenu' ng-click="gotoSwitchConfig()" ng-class="{selected :isSwitchConfigurationPage() }"><label HelpId="0:configuration" ng-bind="labels.switch_configuration"></label></a>
+                    <ul class="subnav" ng-hide="defaultDevConfig.isPwdChangeRequired || isWirelessConfigurationPage() || isHPSwitchConfigurationPage()">
+                        <li class="" ng-if="!isMSPApp()"><a href="#/CONFIGSWITCHES" ng-class="{selected: (selectedNav === '/CONFIGSWITCHES')}" pageId="CONFIGSWITCHES" id='configSubMenu' class=""><label HelpId="0:config_switches" ng-bind="labels.config_switches"></label></a></li>
+                        <li class=""><a href="#/CONFIGPORTS" ng-class="{selected: (selectedNav === '/CONFIGPORTS')}" pageId="CONFIGPORTS" id="configportsSubMenu"><label HelpId="0:ports" ng-bind="labels.ports"></label></a></li>
+                        <li class=""><a href="#/CONFIGVLANS" ng-class="{selected: (selectedNav === '/CONFIGVLANS')}" pageId="CONFIGVLANS" id="configvlanSubMenu"><label HelpId="0:vlans" ng-bind="labels.vlans"></label></a></li>
+                        <li class=""><a href="#/CONFIGDHCP" ng-class="{selected: (selectedNav === '/CONFIGDHCP')}" pageId="CONFIGDHCP" id="configdhcpSubMenu"><label HelpId="0:config_dhcp" ng-bind="labels.config_dhcp"></label></a></li>
+                        <li class=""><a href="#/CONFIGSYSTEM" ng-class="{selected: (selectedNav === '/CONFIGSYSTEM')}" pageId="CONFIGSYSTEM" id="configsystemSubMenu"><label HelpId="0:system" ng-bind="labels.system"></label></a></li>
+                    </ul>
+                </li>
+
+                <!---======================== HP SWITCH CONFIGURATION========================-->
+                <li prevent-click prevent-click-flag="defaultDevConfig.isPwdChangeRequired" ng-class="{selectedModule :isHPSwitchConfigurationPage() }" prevent-click-group-id="defaultDevConfig.groupId" prevent-click-group-name="defaultDevConfig.groupName" ng-hide="(uiLicenses.devices.switches==false || groupConfig.currentSelection.indexOf('swarm') != -1 || isSwitchConfigImportPending) || userAccessType === 'guestoperator'" id='hpSwitchConfigurationMainMenuli'>
+                    <a class="switch_configuration ConfigDisabled configuration" href="javascript:;" state="disable" ng-click="gotoHPSwitchConfig()" ng-class="{selected :isHPSwitchConfigurationPage() }">
+                        <label HelpId="0:hpconfiguration" ng-bind-html="labels.hp_switch_configuration">Switch - Aruba <sup> Beta </sup> </label>
+                    </a>
+                    <ul class="subnav" ng-hide="defaultDevConfig.isPwdChangeRequired || isWirelessConfigurationPage() || isSwitchConfigurationPage()">
+                        <li class="" ng-if="!isMSPApp()"><a href="#/CONFIGHPSWITCHES" ng-class="{selected: (selectedNav === '/CONFIGHPSWITCHES')}" pageId="CONFIGHPSWITCHES" id='configHPSubMenu' class=""><label HelpId="0:config_switches" ng-bind="labels.config_switches"></label></a></li>
+                        <li class=""><a href="#/CONFIGHPPORTS" ng-class="{selected: (selectedNav === '/CONFIGHPPORTS')}" pageId="CONFIGHPPORTS" id="configHPportsSubMenu"><label HelpId="0:ports" ng-bind="labels.ports"></label></a></li>
+                        <li class=""><a href="#/CONFIGHPVLANS" ng-class="{selected: (selectedNav === '/CONFIGHPVLANS')}" pageId="CONFIGHPVLANS" id="configHPvlanSubMenu"><label HelpId="0:vlans" ng-bind="labels.vlans"></label></a></li>
+                        <li><a href="#/CONFIGHPSECURITY" ng-class="{selected: (selectedNav === '/CONFIGHPSECURITY')}" pageId="CONFIGHPSECURITY" id="CONFIGHPSECURITYSubMenu"><label HelpId="0:security" ng-bind="labels.config_hp_security"></label></a></li>
+                        <li><a href="#/CONFIGHPDHCP" ng-class="{selected: (selectedNav === '/CONFIGHPDHCP')}" pageId="CONFIGHPDHCP" id="configHPdhcpSubMenu"><label HelpId="0:config_dhcp" ng-bind="labels.config_dhcp"></label></a></li>
+                        <li class=""><a href="#/CONFIGHPSYSTEM" ng-class="{selected: (selectedNav === '/CONFIGHPSYSTEM')}" pageId="CONFIGHPSYSTEM" id="configHPsystemSubMenu"><label HelpId="0:system" ng-bind="labels.system"></label></a></li>
+                         <li class=""><a href="#/CONFIGHPADVSETTINGS" ng-class="{selected: (selectedNav === '/CONFIGHPADVSETTINGS')}" pageId="CONFIGHPADVSETTINGS" id="configHPadvSettingsMenu"><label HelpId="0:adv_setting" ng-bind="labels.config_hp_adv_settings"></label></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+                <!-- ========================Template based Groups====== -->
+        <li ng-if="template_group" prevent-click prevent-click-flag="defaultDevConfig.isPwdChangeRequired" id="configurationMenu" ng-class="{selectedModule :isConfigPage() }" prevent-click-group-id="defaultDevConfig.groupId" prevent-click-group-name="defaultDevConfig.groupName" ng-hide="((uiLicenses.devices.iap==false && uiLicenses.devices.switches==false) || userAccessType === 'guestoperator') || !template_group ">
+            <a class="configuration ConfigDisabled configuration" href="javascript:;" ng-click="gotoConfig()" state="disable" id='configurationMenu' ng-class="{selected :isConfigPage() }">
+                <label HelpId="0:configuration" ng-bind="labels.configuration"></label>
+            </a>
+            <ul class="subnav level-2" ng-hide="defaultDevConfig.isPwdChangeRequired || isAllGroups()"> 
+
+                <!---======================== WIRELESS CONFIGURATION========================-->
+                <li prevent-click prevent-click-flag="defaultDevConfig.isPwdChangeRequired" id="configurationMainMenuli" ng-class="{selectedModule :isWirelessConfigurationPage() }" prevent-click-group-id="defaultDevConfig.groupId" prevent-click-group-name="defaultDevConfig.groupName" ng-hide="(uiLicenses.devices.iap==false || groupConfig.currentSelection.indexOf('switch') != -1 || userAccessType === 'guestoperator' || isSwarmConfigImportPending)">
+                    <ul class="subnav" ng-hide="defaultDevConfig.isPwdChangeRequired || isSwitchConfigurationPage()">
+                        <li class="nonangular-module" ng-hide = "(groupConfig.currentSelection.indexOf('device') != -1 || groupConfig.currentSelection.indexOf('swarm') != -1)"><a href="#/TEMPLATES" ng-class="{selected: (selectedNav === '/TEMPLATES')}" pageId="TEMPLATES" id='configSubMenu' class=""><label HelpId="0:networks" ng-bind="labels.templates"></label></a></li>
+                        <li class="nonangular-module"><a href="#/VARIABLES" ng-class="{selected: (selectedNav === '/VARIABLES')}" pageId="VARIABLES" id='configSubMenu' class=""><label HelpId="0:networks" ng-bind="labels.variables"></label></a></li>                                           
+                         <li class="nonangular-module" ng-hide="getACL() === 'readonly'"><a href="#/STATUS" ng-class="{selected: (selectedNav === '/STATUS')}" pageId="STATUS" id='configSubMenu' class=""><label HelpId="0:networks" ng-bind="labels.config_hp_adv_settings"></label></a></li>
+                   <!--      <li class="nonangular-module"><a href="#/HPCLISNIPPETS" ng-class="{selected: (selectedNav === '/HPCLISNIPPETS')}" pageId="HPCLISNIPPETS" id='configSubMenu' class=""><label HelpId="0:networks" ng-bind="labels.config_hp_cli_snippet"></label></a></li>-->  
+                    </ul>
+                </li>
+            </ul>
+        </li>
+ 
+                        <!-- ==============End of Template based groups========= -->
+
+                         <!---======================== REPORTS========================-->
+
+
+        <li data-ng-show="!isMSPApp() && collectAppPermission('/GENERATEDREPORTS') !=='denied'" ng-class="{selectedModule: (selectedNav === '/GENERATEDREPORTS') || (selectedNav === '/CONFIGUREREPORTS') || (selectedNav === '/NETWORKREPORT') || (selectedNav === '/SECURITYREPORT') || (selectedNav === '/PCIREPORT')|| (selectedNav === '/INVENTORYREPORT') || (selectedNav === '/INFRAREPORT')|| (selectedNav === '/CLIENTUSAGE') || (selectedNav === '/NEWINFRAREPORT')  || (selectedNav === '/CAPACITYPLANNING') || (selectedNav === '/APPRF_REPORT') || (selectedNav === '/CLIENT_SESSION') || (selectedNav === '/RF_HEALTH') || (selectedNav === '/CFG_STATUS')}"  ng-cloak>
+            <a class="reports" ng-class="{selected: (selectedNav === '/GENERATEDREPORTS') || (selectedNav === '/CONFIGUREREPORTS') || (selectedNav === '/NETWORKREPORT') || (selectedNav === '/SECURITYREPORT') || (selectedNav === '/PCIREPORT') || (selectedNav === '/CAPACITYPLANNING') || (selectedNav === '/APPRF_REPORT') || (selectedNav === '/CLIENT_SESSION')}"  href="#/GENERATEDREPORTS" id="reportsMainMenu" >
+                <label HelpId="0:reports" ng-bind="labels.reports"></label>
+            </a>
+            <ul class="subnav">
+                <li class="nonangular-module">
+                    <a href="#/GENERATEDREPORTS" ng-class="{selected: (selectedNav === '/GENERATEDREPORTS') || (selectedNav === '/NETWORKREPORT') || (selectedNav === '/SECURITYREPORT') || (selectedNav === '/PCIREPORT') || (selectedNav === '/INVENTORYREPORT') || (selectedNav === '/INFRAREPORT') || (selectedNav === '/CLIENTUSAGE') || (selectedNav === '/NEWINFRAREPORT') || (selectedNav === '/CAPACITYPLANNING') || (selectedNav === '/APPRF_REPORT') || (selectedNav === '/CLIENT_SESSION') || (selectedNav === '/RF_HEALTH') || (selectedNav === '/CFG_STATUS')}" pageId="GENERATEDREPORTS" id="generatedReportSubMenu" class="" >
+                        <label HelpId="0:generated_report" ng-bind="labels.generated_report"></label>
+                    </a>
+                </li>
+                <li class="nonangular-module" ng-if="getACL() != 'readonly'">
+                    <a href="#/CONFIGUREREPORTS" ng-class="{selected: (selectedNav === '/CONFIGUREREPORTS')}" pageId="CONFIGUREREPORTS" id="configureReportSubMenu" class="" >
+                        <label HelpId="0:configure_report" ng-bind="labels.configure_report"></label>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!---========================Customers========================-->
+        <li data-ng-show="isMSPApp()" ng-class="{selectedModule : (selectedNav === '/CUSTOMERS')}" ng-cloak><a ng-class="{selected : (selectedNav === '/CUSTOMERS')}" href="#/CUSTOMERS" id="customersMainMenu" ng-bind="labels.customers"><label></label></a>
+        </li>
+
+        
+        <!---======================== SETTINGS ========================-->
+        <li data-ng-show="!(isSwarmConfigImportPending || isSwitchConfigImportPending) && !isMSPCustomer() && (collectAppPermission('/FIRMWARE') !=='denied' || collectAppPermission('/TROUBLESHOOTING') !=='denied')" ng-class="{selectedModule: (selectedNav === '/FIRMWARE')  || (selectedNav === '/TROUBLESHOOTING') || (selectedNav === '/PORTALCUSTOMIZATION') || (selectedNav === '/APIGATEWAY') || (selectedNav === '/AUDITTRAIL')}" ng-cloak>
+            <a class="maintenance" ng-show="collectAppPermission('/FIRMWARE') !=='denied'" href="#/FIRMWARE" id='maintenanceMainMenu' ng-class="{selected: (selectedNav === '/FIRMWARE') || (selectedNav === '/TROUBLESHOOTING') || (selectedNav === '/PORTALCUSTOMIZATION') || (selectedNav === '/APIGATEWAY') || (selectedNav === '/AUDITTRAIL')}"><label HelpId="0:maintenance" ng-bind="labels.maintenance"></label></a>
+            
+            <a class="maintenance" ng-show="collectAppPermission('/FIRMWARE') ==='denied' && collectAppPermission('/TROUBLESHOOTING') !=='denied'" href="#/TROUBLESHOOTING" id='maintenanceMainMenu' ng-class="{selected: (selectedNav === '/FIRMWARE') || (selectedNav === '/TROUBLESHOOTING') || (selectedNav === '/PORTALCUSTOMIZATION') || (selectedNav === '/APIGATEWAY') || (selectedNav === '/AUDITTRAIL')}"><label HelpId="0:maintenance" ng-bind="labels.maintenance"></label></a>
+            <ul class="subnav">
+                <!-- For Any User -->
+                <li ng-cloak ng-if="collectAppPermission('/FIRMWARE') !=='denied'"><a href="#/FIRMWARE" ng-class="{selected: (selectedNav === '/FIRMWARE')}" pageId="FIRMWARE" id="fwSubMenu"><label HelpId="0:firmware" ng-bind="labels.firmware"></label></a></li> 
+
+                <!-- For Non-MSP User -->
+                <li ng-cloak ng-if="!isMSPApp() && collectAppPermission('/TROUBLESHOOTING') !=='denied'"><a href="#/TROUBLESHOOTING"  ng-class="{selected: (selectedNav === '/TROUBLESHOOTING')}" pageId="TROUBLESHOOTING" id="Troubleshooting_Link"><label ng-bind="labels.trouble_shoot"></label></a></li>    
+
+                <!-- For MSP User -->
+                <li ng-cloak ng-if="isMSPApp()"><a href="#/PORTALCUSTOMIZATION" ng-class="{selected: (selectedNav === '/PORTALCUSTOMIZATION')}" pageId="PORTALCUSTOMIZATION" id="portal_customization_link"><label ng-bind="labels.portal_customization"></label></a></li>
+
+                <!-- For Any User -->
+                <li ng-cloak ng-if="AuditTrailAccess"><a href="#/AUDITTRAIL" ng-class="{selected: (selectedNav === '/AUDITTRAIL')}" pageId="AUDITTRAIL" id="audit_trail_link"><label ng-bind="labels.audit_trail"></label></a></li>
+
+                <!-- For Any non read-only User -->
+                <li ng-cloak ng-if="getACL() != 'readonly' && APIGatewayAcccess"><a href="#/APIGATEWAY"  ng-class="{selected: (selectedNav === '/APIGATEWAY')}" pageId="APIGATEWAY" id="api_gateway_Link"><label ng-bind="labels.api_gateway"></label></a></li>
+            </ul>
+        </li>
+
+    <!-- <li ng-hide ="userAccessType === 'guestoperator' || isMSPCustomer()" ng-class="{selectedModule: (selectedNav === '/DOCUMENTATION')}"><a class="documentation" href="#/DOCUMENTATION" class="" ng-class="{selected: (selectedNav === '/DOCUMENTATION')}" pageId="DOCUMENTATION"><label ng-bind="labels.documentation"></label></a></li>-->
+    </ul>
+
+    <!---======================== GUEST MANAGEMENT========================-->
+    <ul class="FirstMe" ng-if = "activeAppWidget === 'app-guest-mgmt'">
+        <li ng-class="{selectedModule: (selectedNav === '/CAPTIVEPORTAL') || (selectedNav === '/CAPTIVEPORTALVISITORS') || (selectedNav === '/EDITCAPTIVEPORTAL') || (selectedNav === '/NEWCAPTIVEPORTAL') || (selectedNav === '/CGDASHBOARD') || (selectedNav === '/GUESTNETWORK') || (selectedNav === '/CREATEGUESTNW') || (selectedNav.indexOf('/EDITGUESTNW') > -1)}" ><a class="guest_management"  ng-class="{selected :(selectedNav === '/CAPTIVEPORTAL') || (selectedNav === '/CAPTIVEPORTALVISITORS') || (selectedNav === '/EDITCAPTIVEPORTAL') || (selectedNav === '/NEWCAPTIVEPORTAL') || (selectedNav === '/CGDASHBOARD') || (selectedNav === '/GUESTNETWORK')}" href="#/CGDASHBOARD" id="captivePortalMainMenu" ></a>
+            <ul class="subnav">
+                <li data-ng-show="!isMSPApp() && !isGuestOperator()"><a href="#/CGDASHBOARD" ng-class="{selected: (selectedNav === '/CGDASHBOARD')}" pageId="CGDASHBOARD" id="cgOverviewSubMenu" class=""><label HelpId="0:overview" ng-bind="labels.overview"></label></a></li>
+                <li data-ng-show="!isGuestOperator()" ng-cloak><a href="#/CAPTIVEPORTAL" ng-class="{selected: (selectedNav === '/CAPTIVEPORTAL')}" pageId="CAPTIVEPORTAL" id="splashPageSubMenu"><label ng-bind="labels.splash_page">Splash Pages</label></a></li>
+                <li data-ng-show="!isMSPApp()"><a href="#/CAPTIVEPORTALVISITORS" ng-class="{selected: (selectedNav === '/CAPTIVEPORTALVISITORS')}" pageId="CPVISTIORS" id="splashVisitorPageSubMenu"><label ng-bind="labels.splash_visitors">Visitors</label></a></li>
+                <li data-ng-if="isCGNwWizEnabled && !isMSPApp()"><a href="#/GUESTNETWORK" ng-class="{selected: (selectedNav === '/GUESTNETWORK') || (selectedNav === '/CREATEGUESTNW') || (selectedNav.indexOf('/EDITGUESTNW') > -1)}" pageId="CPGUESTNTWRK"><label ng-bind="labels.guest_network"></label></a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <!---======================== GLOBAL SETTINGS ========================-->
+    <ul class="FirstMe" ng-show = "activeAppWidget == 'app-global-settings'">        
+        <li ng-class="{selectedModule: (selectedNav === '/SUBSCRIPTIONKEYS') || (selectedNav === '/DEVICEMANAGEMENT') || (selectedNav === '/SUBSCRIPTIONASSIGNMENT') || (selectedNav === '/CLUSTERMANAGEMENT')|| (selectedNav === '/CLOUDGATEWAY')}" ng-show="!isMSPasCustomer() && !isMSPCustomer()" ng-if="!isNetInsightCustomer" ng-cloak>
+            <a class="license_management" ng-class="{selected: (selectedNav === '/SUBSCRIPTIONKEYS') || (selectedNav === '/DEVICEMANAGEMENT')|| (selectedNav === '/SUBSCRIPTIONASSIGNMENT') || (selectedNav === '/CLUSTERMANAGEMENT')}" href="#/DEVICEMANAGEMENT" id='devices_subscriptionsMgntMainMenu' ng-bind="labels.nav_subscriptions">Devices & Subscriptions</a>
+            <ul class="subnav">
+                <li ng-cloak><a href="#/DEVICEMANAGEMENT" ng-class="{selected: (selectedNav === '/DEVICEMANAGEMENT')}" id="device_provisioning"><label ng-bind="labels.nav_device_provision">Device Provisioning</label></a></li>
+
+                <li ng-cloak><a href="#/SUBSCRIPTIONKEYS" ng-class="{selected: (selectedNav === '/SUBSCRIPTIONKEYS')}" id="suscription_keys"><label ng-bind="labels.nav_suscription_keys">Subscription Keys</label></a></li>
+
+                <li ng-cloak><a href="#/SUBSCRIPTIONASSIGNMENT" ng-class="{selected: (selectedNav === '/SUBSCRIPTIONASSIGNMENT')}" id="subscription_assignment"><label ng-bind="labels.nav_subscription_assignment">Subscription Assignment</label></a></li>
+
+                <li data-ng-show="!isMSPApp() && isHCMSEnabled" ng-cloak><a href="#/CLUSTERMANAGEMENT" ng-class="{selected: (selectedNav === '/CLUSTERMANAGEMENT')}" id="cluster_management"><label ng-bind="labels.cluster_management">Cluster Management</label><span class="beta-tag"></span></a></li>
+                <li data-ng-if="isCouldGatewayEnabled" ng-cloak><a href="#/CLOUDGATEWAY" ng-class="{selected: (selectedNav === '/CLOUDGATEWAY')}" id="cloud_gateway"><label ng-bind="labels.cloud_gateway">Cloud Gateway</label><span class="beta-tag"></span></a></li>
+            </ul>
+        </li>
+        <li data-ng-show="!isMSPApp()" ng-if="!isNetInsightCustomer" ng-class="{selectedModule: (selectedNav === '/LABELASSIGNMENT') || (selectedNav === '/LABELMANAGEMENT')}" ><a class="label_management"  ng-class="{selected : (selectedNav === '/LABELMANAGEMENT')}" href="#/LABELMANAGEMENT" id="nav_lbl_management" ng-bind="labels.nav_labels">Labels</a>
+            <ul class="subnav">
+                <li ng-cloak><a href="#/LABELMANAGEMENT" ng-class="{selected: (selectedNav === '/LABELMANAGEMENT')}" id="sub_nav_lbl_mgmt"><label ng-bind="labels.nav_labels_management">Management</label></a></li>
+                <li ng-cloak><a href="#/LABELASSIGNMENT" ng-class="{selected: (selectedNav === '/LABELASSIGNMENT')}" id="sub_nav_lbl_asmt"><label ng-bind="labels.nav_labels_assignment">Assignment</label></a></li>
+            </ul>
+        </li>
+        <li ng-if="(!isMSPINCentralView() && !isMSPsEndCustomerView)" ng-class="{selectedModule: (selectedNav === '/USERSROLESMANAGEMENT')}" class="activity-main-menu">
+            <a class="rbac_management"  ng-class="{selected : (selectedNav === '/USERSROLESMANAGEMENT')}" href="#/USERSROLESMANAGEMENT" id="nav_user_role_management" ng-bind="labels.nav_users_roles">Users & Roles</a>
+        </li>
+    </ul>
+   
+
+    <!---======================== Presence Analytics========================-->
+    <ul class="FirstMe" ng-show = "activeAppWidget == 'app-pa'">
+        <li onclick="javascript:trackClickLink('#paMainMenu','side_menu_pa_activity_selected');" ng-class="{selectedModule: (selectedNav === '/pa_activity') || (selectedNav === '/analytics_top_page') || (selectedNav === '/analytics_bottom_page') || (selectedNav === '/analytics_default') || (selectedNav === '/analytics_table_page') || (selectedNav === '/analytics_configuration')}"  class="acp-pa-activity-menu">
+            <a href="#/pa_activity" ng-class="{selected: (selectedNav === '/pa_activity')}" id="paMainMenu">
+                <label ng-bind="labels.nav_labels_activity"></label>
+            </a>
+            <!-- <ul class="subnav">
+                <li ng-cloak>
+                    <a href="#/pa_activity" ng-class="{selected: (selectedNav === '/pa_activity')}" id="">
+                        <label ng-bind="labels.nav_labels_activity"></label>
+                    </a>
+                </li>
+            </ul> -->
+        </li>
+        <li onclick="javascript:trackClickLink('#nav_pa','side_menu_pa_settings_threshold_selected');" ng-class="{selectedModule: (selectedNav === '/analytics_configuration')}" >
+            <a class="presence_analytics"  ng-class="{selected : (selectedNav === '/analytics_configuration')}" href="#/analytics_configuration" id="nav_pa" ><label ng-bind="labels.nav_labels_settings"></label></a>
+            <ul class="subnav">
+                <li  onclick="javascript:trackClickLink('#nav_pa_configuration','side_menu_pa_settings_threshold_selected');" ng-cloak>
+                    <a href="#/analytics_configuration" ng-class="{selected: (selectedNav === '/analytics_configuration')}" id="nav_pa_configuration">
+                        <label ng-bind="labels.nav_labels_threshold"></label>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <!---======================== Connectivity Analytics========================-->
+    <ul class="FirstMe" ng-show = "activeAppWidget == 'app-ca'">
+        <li ng-class="{selectedModule: (selectedNav === '/clarity_dash') || (selectedNav === '/clarity_insights') || (selectedNav === '/clarity_troubleshooting')}" >
+            <ul class="subnav left_nav_space_top">
+                <li onclick="javascript:trackClickLink('#left_nav_ca_activity','sub_menu_ca_activity_selected');" ng-cloak>
+                    <a href="#/clarity_dash" ng-class="{selected: (selectedNav === '/clarity_dash')}" id="left_nav_ca_activity">
+                        <label ng-bind="labels.nav_labels_activity"></label>
+                    </a>
+                </li>
+                <li onclick="javascript:trackClickLink('#left_nav_ca_insights','sub_menu_ca_insights_selected');" ng-clock>
+                    <a href="#/clarity_insights" ng-class="{selected: (selectedNav === '/clarity_insights') }" id="left_nav_ca_insights">
+                        <label ng-bind="labels.nav_labels_insights"></label>
+                    </a>
+                </li>
+                <li onclick="javascript:trackClickLink('#left_nav_ca_troubleshooting','sub_menu_ca_troubleshooting_selected');" ng-clock>
+                    <a href="#/clarity_troubleshooting" ng-class="{selected: (selectedNav === '/clarity_troubleshooting') }" id="left_nav_ca_troubleshooting">
+                        <label ng-bind="labels.trouble_shoot"></label>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <!---======================== UCC ========================-->
+    <ul class="FirstMe" ng-show = "activeAppWidget == 'app-ucc'">
+        <li ng-class="{selectedModule: (selectedNav === '/ucc_activity') || (selectedNav === '/ucc_insights') || (selectedNav === '/ucc_ts_client')}" >
+            <!-- <a class="ucc"  ng-class="{selected : (selectedNav === '/ucc_activity')}" href="#/ucc_activity" id="nav_ucc" ><label ng-bind="labels.nav_labels_monitoring"></label></a> -->
+            <ul class="subnav left_nav_space_top">
+                <li onclick="javascript:trackClickLink('#nav_ucc_activity','sub_menu_uc_activity_selected');" ng-cloak>
+                    <a href="#/ucc_activity" ng-class="{selected: (selectedNav === '/ucc_activity')}" id="nav_ucc_activity">
+                        <label ng-bind="labels.nav_labels_activity"></label>
+                    </a>
+                </li>
+                <li onclick="javascript:trackClickLink('#nav_ucc_insights','sub_menu_uc_insights_selected');" ng-clock>
+                    <a href="#/ucc_insights" ng-class="{selected: (selectedNav === '/ucc_insights')}" id="nav_ucc_insights">
+                        <label ng-bind="labels.nav_labels_insights"></label>
+                    </a>
+                </li>
+                <li onclick="javascript:trackClickLink('#nav_ucc_troubleshooting','sub_menu_uc_troubleshooting_selected');" ng-clock>
+                    <a href="#/ucc_ts_client" ng-class="{selected: (selectedNav === '/ucc_ts_client')}" id="nav_ucc_troubleshooting">
+                        <label ng-bind="labels.nav_labels_troubleshooting"></label>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+     <!---======================== AirGroup ========================-->
+    <ul class="FirstMe" ng-show = "activeAppWidget == 'app-ag'">
+        <li ng-class="{selectedModule: (selectedNav === '/ag_activity') || (selectedNav === '/ag_troubleshooting')}" >
+            <ul class="subnav left_nav_space_top">
+                <li onclick="javascript:trackClickLink('#nav_ag_activity','sub_menu_ag_activity_selected');" ng-cloak>
+                    <a href="#/ag_activity" ng-class="{selected: (selectedNav === '/ag_activity')}" id="nav_ag_activity">
+                        <label ng-bind="labels.nav_labels_activity"></label>
+                    </a>
+                </li>
+                <li onclick="javascript:trackClickLink('#nav_ag_troubleshooting','sub_menu_ag_troubleshooting_selected');" ng-clock>
+                    <a href="#/ag_troubleshooting" ng-class="{selected: (selectedNav === '/ag_troubleshooting')}" id="nav_ag_troubleshooting">
+                        <label ng-bind="labels.nav_labels_troubleshooting"></label>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+     <!---======================== VISUALRF=========================-->
+    <ul class="FirstMe" ng-class="{expandMobileMenu: enableMobileMenu}" ng-show="activeAppWidget == 'app-visualrf'">
+        <li ng-class="{selectedModule: isVisualRF()}" ng-cloak> 
+            <a class="visualrf" ng-class="{selected: isVisualRF()}" href="#/vrf"></a>
+            <ul class="subnav">
+                <li><a href="#/vrf" ng-class="{selected: (selectedNav === '/vrf')}"><label>Floor Plans</label></a></li>
+                <li><a href="#/vrf_import" ng-class="{selected: (selectedNav === '/vrf_import')}"><label>Import</label></a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <!---======================== Sample Application ========================-->
+    <ul class="FirstMe" ng-show = "activeAppWidget == 'app-sample'">
+        <li ng-class="{selectedModule: (selectedNav === '/sample_app_dashboard') || (selectedNav === '/sample_app_dashboard2') }" >
+            <a class="presence_analytics"  ng-class="{selected : (selectedNav === '/sample_app_dashboard')}" href="#/sample_app_dashboard" id="sample_app_dashboard" ><label>Sample App</label></a>
+            <ul class="subnav">
+                <li ng-cloak>
+                    <a href="#/sample_app_dashboard" ng-class="{selected: (selectedNav === '/sample_app_dashboard')}" id="">
+                        <label>Page 1</label>
+                    </a>
+                </li>
+                <li ng-clock>
+                    <a href="#/sample_app_dashboard2" ng-class="{selected: (selectedNav === '/sample_app_dashboard2')}" id="splashVisitorPageSubMenu">
+                        <label>Page 2</label>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</div>

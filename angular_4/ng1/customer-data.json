@@ -1,0 +1,11 @@
+ {
+   "customers": [{
+     "name": "Kim",
+     "address": "1600 Amphitheatre",
+     "clicks": 0
+   }, {
+     "name": "Bob",
+     "address": "1010 MyRoad",
+     "clicks": 0
+   }]
+ } 
