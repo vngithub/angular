@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>simplestyle_horizon</title>
+    <meta name="description" content="website description" />
+    <meta name="keywords" content="website keywords, website keywords" />
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style type="text/css">
+   
+</style>
+</head>
+
+<body>
+    <div id="main">
+    	<div id="site_content" style="display:flex">
+            <div id="sidebar_container">
+                <div class="sidebar">
+                	<div style="text-align:center;"><a href="index.html"><img class="brand-logo" src="style/happy_feet.svg" alt="logo" /></a></div><div style="font-size: 50px;text-align: center;margin-top: 5px;text-transform: uppercase;color:#3D8FD0;">Happy Feet</div></br >
+                            <select id="soflow" onClick='getAllData()'>
+  								<option>Hashil's Team</option>
+							</select>
+                    <br />
+                    <div id="sidebar"></div>
+                </div>
+            </div>
+			<div style="height: 400px;width: 100%;margin: 30px;">
+				<div style="height: 400px;width: 100%; margin-bottom:30px; background-color:#FAFBFD;" id="container"></div>
+			</div>
+        </div>
+	
+
+</body>
+
+<script src="index.js"></script>
+
+</html>
